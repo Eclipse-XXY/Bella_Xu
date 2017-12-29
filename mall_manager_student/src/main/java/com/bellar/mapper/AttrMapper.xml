@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bellar.mapper.AttrMapper">
+<select id="get_attr_by_class_2_id" parameterType="int" resultMap="select_attr_by_class_2_map">
+SELECT
+	a.Id as attr_id ,a.*,b.Id as value_id,b.*
+FROM
+	t_mall_attr AS a
+JOIN t_mall_value AS b 
+ON a.Id = b.shxm_id
+WHERE a.flbh2=#{class_2_id}
+</select>
+	<!-- autoMapping="true" 表示自动匹配的意思-->
+<resultMap type="com.bellar.bean.OBJECT_T_MALL_ATTR" 
+id="select_attr_by_class_2_map" autoMapping="true" >
+	<!-- attr_id是我自己数据库起的别名叫它匹配上自己定义的对象的额主键其他的自动装载 -->
+	<result property="id" column="attr_id"/>
+	<collection property="list_value" ofType="com.bellar.bean.T_MALL_VALUE" autoMapping="true">
+		<result property="id" column="value_id"/>
+	</collection>
+</resultMap>
+<insert id="add_attr" parameterType="Map" useGeneratedKeys="true" keyColumn="id" keyProperty="attr.id">
+insert into t_mall_attr
+(
+shxm_mch,
+flbh2
+)
+values
+(
+#{attr.shxm_mch},
+#{class_2_id}
+)
+</insert>
+<insert id="add_value" parameterType="Map" >
+insert into t_mall_value
+(
+shxzh,
+shxm_id,
+shxzh_mch
+)
+values
+<foreach collection="list_value" item="value" separator=",">
+(
+#{value.shxzh},
+#{attr_id},
+#{value.shxzh_mch}
+)
+</foreach>
+</insert>
+</mapper>
+
