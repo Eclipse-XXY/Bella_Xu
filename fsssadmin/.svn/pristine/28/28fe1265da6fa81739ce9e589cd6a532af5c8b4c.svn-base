@@ -1,0 +1,16 @@
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://182.92.64.67:23306/hw_main_admin?useUnicode=true&characterEncoding=utf8&assetscenterdb?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true
+jdbc.username=root
+jdbc.password=ihw@0513Q123
+#jdbc.url=jdbc:mysql://localhost:3306/lehm?useUnicode=true&characterEncoding=utf8&assetscenterdb?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true
+#jdbc.username=root
+#jdbc.password=root
+jdbc.idleConnectionTestPeriodInMinutes=60
+jdbc.idleMaxAgeInMinutes=240
+jdbc.maxConnectionsPerPartition=10
+jdbc.minConnectionsPerPartition=5
+jdbc.partitionCount=1
+jdbc.acquireIncrement=5
+jdbc.statementsCacheSize=20
+jdbc.releaseHelperThreads=10
+jdbc.logStatementsEnabled=false

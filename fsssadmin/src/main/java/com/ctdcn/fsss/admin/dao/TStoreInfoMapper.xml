@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ctdcn.fsss.admin.dao.TStoreInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ctdcn.fsss.admin.entity.TStoreInfo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="YDNAME" property="ydname" jdbcType="CHAR" />
+    <result column="YDADDR" property="ydaddr" jdbcType="CHAR" />
+    <result column="YDTEL" property="ydtel" jdbcType="CHAR" />
+    <result column="YDLXR" property="ydlxr" jdbcType="CHAR" />
+    <result column="FID" property="fid" jdbcType="INTEGER" />
+    <result column="FMID" property="fmid" jdbcType="INTEGER" />
+    <result column="YDYBBH" property="ydybbh" jdbcType="VARCHAR" />
+    <result column="YBJSHOST" property="ybjshost" jdbcType="VARCHAR" />
+    <result column="SMKSID" property="smksid" jdbcType="VARCHAR" />
+    <result column="SMKDID" property="smkdid" jdbcType="VARCHAR" />
+    <result column="ISMXBYD" property="ismxbyd" jdbcType="INTEGER" />
+    <result column="ISJY" property="isjy" jdbcType="INTEGER" />
+    <result column="ISMCYF" property="ismcyf" jdbcType="INTEGER" />
+    <result column="LATITUDE" property="latitude" jdbcType="INTEGER" />
+    <result column="LONGITUDE" property="longitude" jdbcType="INTEGER" />
+    <result column="AREAID" property="areaid" jdbcType="INTEGER" />
+    <result column="YDIMG" property="ydimg" jdbcType="VARCHAR" />
+    <result column="PZSM" property="pzsm" jdbcType="VARCHAR" />
+    <result column="PZSMIMAG" property="pzsmimag" jdbcType="VARCHAR" />
+    <result column="YID" property="yid" jdbcType="VARCHAR" />
+    <result column="YDZSIMG" property="ydzsimg" jdbcType="VARCHAR" />
+    <result column="ZZXYIMG" property="zzxyimg" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+    <result column="STARTTIME" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="ENDTIME" property="endtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ctdcn.fsss.admin.entity.TStoreInfoWithBLOBs" extends="BaseResultMap" >
+    <result column="YDDESC" property="yddesc" jdbcType="LONGVARCHAR" />
+    <result column="YDSM" property="ydsm" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, YDNAME, YDADDR, YDTEL, YDLXR, FID, FMID, YDYBBH, YBJSHOST, SMKSID, SMKDID, ISMXBYD, 
+    ISJY, ISMCYF, LATITUDE, LONGITUDE, AREAID, YDIMG, PZSM, PZSMIMAG, YID, YDZSIMG, ZZXYIMG, 
+    SORT, STARTTIME, ENDTIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    YDDESC, YDSM
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ctdcn.fsss.admin.entity.TStoreInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_store_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ctdcn.fsss.admin.entity.TStoreInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_store_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_store_info
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_store_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ctdcn.fsss.admin.entity.TStoreInfoExample" >
+    delete from t_store_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ctdcn.fsss.admin.entity.TStoreInfoWithBLOBs" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_store_info (YDNAME, YDADDR, YDTEL, 
+      YDLXR, FID, FMID, YDYBBH, 
+      YBJSHOST, SMKSID, SMKDID, 
+      ISMXBYD, ISJY, ISMCYF, 
+      LATITUDE, LONGITUDE, AREAID, 
+      YDIMG, PZSM, PZSMIMAG, 
+      YID, YDZSIMG, ZZXYIMG, 
+      SORT, STARTTIME, ENDTIME, 
+      YDDESC, YDSM)
+    values (#{ydname,jdbcType=CHAR}, #{ydaddr,jdbcType=CHAR}, #{ydtel,jdbcType=CHAR}, 
+      #{ydlxr,jdbcType=CHAR}, #{fid,jdbcType=INTEGER}, #{fmid,jdbcType=INTEGER}, #{ydybbh,jdbcType=VARCHAR}, 
+      #{ybjshost,jdbcType=VARCHAR}, #{smksid,jdbcType=VARCHAR}, #{smkdid,jdbcType=VARCHAR}, 
+      #{ismxbyd,jdbcType=INTEGER}, #{isjy,jdbcType=INTEGER}, #{ismcyf,jdbcType=INTEGER}, 
+      #{latitude,jdbcType=INTEGER}, #{longitude,jdbcType=INTEGER}, #{areaid,jdbcType=INTEGER}, 
+      #{ydimg,jdbcType=VARCHAR}, #{pzsm,jdbcType=VARCHAR}, #{pzsmimag,jdbcType=VARCHAR}, 
+      #{yid,jdbcType=VARCHAR}, #{ydzsimg,jdbcType=VARCHAR}, #{zzxyimg,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{yddesc,jdbcType=LONGVARCHAR}, #{ydsm,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ctdcn.fsss.admin.entity.TStoreInfoWithBLOBs" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_store_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ydname != null" >
+        YDNAME,
+      </if>
+      <if test="ydaddr != null" >
+        YDADDR,
+      </if>
+      <if test="ydtel != null" >
+        YDTEL,
+      </if>
+      <if test="ydlxr != null" >
+        YDLXR,
+      </if>
+      <if test="fid != null" >
+        FID,
+      </if>
+      <if test="fmid != null" >
+        FMID,
+      </if>
+      <if test="ydybbh != null" >
+        YDYBBH,
+      </if>
+      <if test="ybjshost != null" >
+        YBJSHOST,
+      </if>
+      <if test="smksid != null" >
+        SMKSID,
+      </if>
+      <if test="smkdid != null" >
+        SMKDID,
+      </if>
+      <if test="ismxbyd != null" >
+        ISMXBYD,
+      </if>
+      <if test="isjy != null" >
+        ISJY,
+      </if>
+      <if test="ismcyf != null" >
+        ISMCYF,
+      </if>
+      <if test="latitude != null" >
+        LATITUDE,
+      </if>
+      <if test="longitude != null" >
+        LONGITUDE,
+      </if>
+      <if test="areaid != null" >
+        AREAID,
+      </if>
+      <if test="ydimg != null" >
+        YDIMG,
+      </if>
+      <if test="pzsm != null" >
+        PZSM,
+      </if>
+      <if test="pzsmimag != null" >
+        PZSMIMAG,
+      </if>
+      <if test="yid != null" >
+        YID,
+      </if>
+      <if test="ydzsimg != null" >
+        YDZSIMG,
+      </if>
+      <if test="zzxyimg != null" >
+        ZZXYIMG,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+      <if test="starttime != null" >
+        STARTTIME,
+      </if>
+      <if test="endtime != null" >
+        ENDTIME,
+      </if>
+      <if test="yddesc != null" >
+        YDDESC,
+      </if>
+      <if test="ydsm != null" >
+        YDSM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ydname != null" >
+        #{ydname,jdbcType=CHAR},
+      </if>
+      <if test="ydaddr != null" >
+        #{ydaddr,jdbcType=CHAR},
+      </if>
+      <if test="ydtel != null" >
+        #{ydtel,jdbcType=CHAR},
+      </if>
+      <if test="ydlxr != null" >
+        #{ydlxr,jdbcType=CHAR},
+      </if>
+      <if test="fid != null" >
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="fmid != null" >
+        #{fmid,jdbcType=INTEGER},
+      </if>
+      <if test="ydybbh != null" >
+        #{ydybbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ybjshost != null" >
+        #{ybjshost,jdbcType=VARCHAR},
+      </if>
+      <if test="smksid != null" >
+        #{smksid,jdbcType=VARCHAR},
+      </if>
+      <if test="smkdid != null" >
+        #{smkdid,jdbcType=VARCHAR},
+      </if>
+      <if test="ismxbyd != null" >
+        #{ismxbyd,jdbcType=INTEGER},
+      </if>
+      <if test="isjy != null" >
+        #{isjy,jdbcType=INTEGER},
+      </if>
+      <if test="ismcyf != null" >
+        #{ismcyf,jdbcType=INTEGER},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=INTEGER},
+      </if>
+      <if test="areaid != null" >
+        #{areaid,jdbcType=INTEGER},
+      </if>
+      <if test="ydimg != null" >
+        #{ydimg,jdbcType=VARCHAR},
+      </if>
+      <if test="pzsm != null" >
+        #{pzsm,jdbcType=VARCHAR},
+      </if>
+      <if test="pzsmimag != null" >
+        #{pzsmimag,jdbcType=VARCHAR},
+      </if>
+      <if test="yid != null" >
+        #{yid,jdbcType=VARCHAR},
+      </if>
+      <if test="ydzsimg != null" >
+        #{ydzsimg,jdbcType=VARCHAR},
+      </if>
+      <if test="zzxyimg != null" >
+        #{zzxyimg,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yddesc != null" >
+        #{yddesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="ydsm != null" >
+        #{ydsm,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ctdcn.fsss.admin.entity.TStoreInfoExample" resultType="java.lang.Integer" >
+    select count(*) from t_store_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_store_info
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.ydname != null" >
+        YDNAME = #{record.ydname,jdbcType=CHAR},
+      </if>
+      <if test="record.ydaddr != null" >
+        YDADDR = #{record.ydaddr,jdbcType=CHAR},
+      </if>
+      <if test="record.ydtel != null" >
+        YDTEL = #{record.ydtel,jdbcType=CHAR},
+      </if>
+      <if test="record.ydlxr != null" >
+        YDLXR = #{record.ydlxr,jdbcType=CHAR},
+      </if>
+      <if test="record.fid != null" >
+        FID = #{record.fid,jdbcType=INTEGER},
+      </if>
+      <if test="record.fmid != null" >
+        FMID = #{record.fmid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ydybbh != null" >
+        YDYBBH = #{record.ydybbh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ybjshost != null" >
+        YBJSHOST = #{record.ybjshost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smksid != null" >
+        SMKSID = #{record.smksid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smkdid != null" >
+        SMKDID = #{record.smkdid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ismxbyd != null" >
+        ISMXBYD = #{record.ismxbyd,jdbcType=INTEGER},
+      </if>
+      <if test="record.isjy != null" >
+        ISJY = #{record.isjy,jdbcType=INTEGER},
+      </if>
+      <if test="record.ismcyf != null" >
+        ISMCYF = #{record.ismcyf,jdbcType=INTEGER},
+      </if>
+      <if test="record.latitude != null" >
+        LATITUDE = #{record.latitude,jdbcType=INTEGER},
+      </if>
+      <if test="record.longitude != null" >
+        LONGITUDE = #{record.longitude,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaid != null" >
+        AREAID = #{record.areaid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ydimg != null" >
+        YDIMG = #{record.ydimg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pzsm != null" >
+        PZSM = #{record.pzsm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pzsmimag != null" >
+        PZSMIMAG = #{record.pzsmimag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yid != null" >
+        YID = #{record.yid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ydzsimg != null" >
+        YDZSIMG = #{record.ydzsimg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zzxyimg != null" >
+        ZZXYIMG = #{record.zzxyimg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        SORT = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.starttime != null" >
+        STARTTIME = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null" >
+        ENDTIME = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.yddesc != null" >
+        YDDESC = #{record.yddesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.ydsm != null" >
+        YDSM = #{record.ydsm,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_store_info
+    set ID = #{record.id,jdbcType=INTEGER},
+      YDNAME = #{record.ydname,jdbcType=CHAR},
+      YDADDR = #{record.ydaddr,jdbcType=CHAR},
+      YDTEL = #{record.ydtel,jdbcType=CHAR},
+      YDLXR = #{record.ydlxr,jdbcType=CHAR},
+      FID = #{record.fid,jdbcType=INTEGER},
+      FMID = #{record.fmid,jdbcType=INTEGER},
+      YDYBBH = #{record.ydybbh,jdbcType=VARCHAR},
+      YBJSHOST = #{record.ybjshost,jdbcType=VARCHAR},
+      SMKSID = #{record.smksid,jdbcType=VARCHAR},
+      SMKDID = #{record.smkdid,jdbcType=VARCHAR},
+      ISMXBYD = #{record.ismxbyd,jdbcType=INTEGER},
+      ISJY = #{record.isjy,jdbcType=INTEGER},
+      ISMCYF = #{record.ismcyf,jdbcType=INTEGER},
+      LATITUDE = #{record.latitude,jdbcType=INTEGER},
+      LONGITUDE = #{record.longitude,jdbcType=INTEGER},
+      AREAID = #{record.areaid,jdbcType=INTEGER},
+      YDIMG = #{record.ydimg,jdbcType=VARCHAR},
+      PZSM = #{record.pzsm,jdbcType=VARCHAR},
+      PZSMIMAG = #{record.pzsmimag,jdbcType=VARCHAR},
+      YID = #{record.yid,jdbcType=VARCHAR},
+      YDZSIMG = #{record.ydzsimg,jdbcType=VARCHAR},
+      ZZXYIMG = #{record.zzxyimg,jdbcType=VARCHAR},
+      SORT = #{record.sort,jdbcType=INTEGER},
+      STARTTIME = #{record.starttime,jdbcType=TIMESTAMP},
+      ENDTIME = #{record.endtime,jdbcType=TIMESTAMP},
+      YDDESC = #{record.yddesc,jdbcType=LONGVARCHAR},
+      YDSM = #{record.ydsm,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_store_info
+    set ID = #{record.id,jdbcType=INTEGER},
+      YDNAME = #{record.ydname,jdbcType=CHAR},
+      YDADDR = #{record.ydaddr,jdbcType=CHAR},
+      YDTEL = #{record.ydtel,jdbcType=CHAR},
+      YDLXR = #{record.ydlxr,jdbcType=CHAR},
+      FID = #{record.fid,jdbcType=INTEGER},
+      FMID = #{record.fmid,jdbcType=INTEGER},
+      YDYBBH = #{record.ydybbh,jdbcType=VARCHAR},
+      YBJSHOST = #{record.ybjshost,jdbcType=VARCHAR},
+      SMKSID = #{record.smksid,jdbcType=VARCHAR},
+      SMKDID = #{record.smkdid,jdbcType=VARCHAR},
+      ISMXBYD = #{record.ismxbyd,jdbcType=INTEGER},
+      ISJY = #{record.isjy,jdbcType=INTEGER},
+      ISMCYF = #{record.ismcyf,jdbcType=INTEGER},
+      LATITUDE = #{record.latitude,jdbcType=INTEGER},
+      LONGITUDE = #{record.longitude,jdbcType=INTEGER},
+      AREAID = #{record.areaid,jdbcType=INTEGER},
+      YDIMG = #{record.ydimg,jdbcType=VARCHAR},
+      PZSM = #{record.pzsm,jdbcType=VARCHAR},
+      PZSMIMAG = #{record.pzsmimag,jdbcType=VARCHAR},
+      YID = #{record.yid,jdbcType=VARCHAR},
+      YDZSIMG = #{record.ydzsimg,jdbcType=VARCHAR},
+      ZZXYIMG = #{record.zzxyimg,jdbcType=VARCHAR},
+      SORT = #{record.sort,jdbcType=INTEGER},
+      STARTTIME = #{record.starttime,jdbcType=TIMESTAMP},
+      ENDTIME = #{record.endtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ctdcn.fsss.admin.entity.TStoreInfoWithBLOBs" >
+    update t_store_info
+    <set >
+      <if test="ydname != null" >
+        YDNAME = #{ydname,jdbcType=CHAR},
+      </if>
+      <if test="ydaddr != null" >
+        YDADDR = #{ydaddr,jdbcType=CHAR},
+      </if>
+      <if test="ydtel != null" >
+        YDTEL = #{ydtel,jdbcType=CHAR},
+      </if>
+      <if test="ydlxr != null" >
+        YDLXR = #{ydlxr,jdbcType=CHAR},
+      </if>
+      <if test="fid != null" >
+        FID = #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="fmid != null" >
+        FMID = #{fmid,jdbcType=INTEGER},
+      </if>
+      <if test="ydybbh != null" >
+        YDYBBH = #{ydybbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ybjshost != null" >
+        YBJSHOST = #{ybjshost,jdbcType=VARCHAR},
+      </if>
+      <if test="smksid != null" >
+        SMKSID = #{smksid,jdbcType=VARCHAR},
+      </if>
+      <if test="smkdid != null" >
+        SMKDID = #{smkdid,jdbcType=VARCHAR},
+      </if>
+      <if test="ismxbyd != null" >
+        ISMXBYD = #{ismxbyd,jdbcType=INTEGER},
+      </if>
+      <if test="isjy != null" >
+        ISJY = #{isjy,jdbcType=INTEGER},
+      </if>
+      <if test="ismcyf != null" >
+        ISMCYF = #{ismcyf,jdbcType=INTEGER},
+      </if>
+      <if test="latitude != null" >
+        LATITUDE = #{latitude,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        LONGITUDE = #{longitude,jdbcType=INTEGER},
+      </if>
+      <if test="areaid != null" >
+        AREAID = #{areaid,jdbcType=INTEGER},
+      </if>
+      <if test="ydimg != null" >
+        YDIMG = #{ydimg,jdbcType=VARCHAR},
+      </if>
+      <if test="pzsm != null" >
+        PZSM = #{pzsm,jdbcType=VARCHAR},
+      </if>
+      <if test="pzsmimag != null" >
+        PZSMIMAG = #{pzsmimag,jdbcType=VARCHAR},
+      </if>
+      <if test="yid != null" >
+        YID = #{yid,jdbcType=VARCHAR},
+      </if>
+      <if test="ydzsimg != null" >
+        YDZSIMG = #{ydzsimg,jdbcType=VARCHAR},
+      </if>
+      <if test="zzxyimg != null" >
+        ZZXYIMG = #{zzxyimg,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        STARTTIME = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yddesc != null" >
+        YDDESC = #{yddesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="ydsm != null" >
+        YDSM = #{ydsm,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ctdcn.fsss.admin.entity.TStoreInfoWithBLOBs" >
+    update t_store_info
+    set YDNAME = #{ydname,jdbcType=CHAR},
+      YDADDR = #{ydaddr,jdbcType=CHAR},
+      YDTEL = #{ydtel,jdbcType=CHAR},
+      YDLXR = #{ydlxr,jdbcType=CHAR},
+      FID = #{fid,jdbcType=INTEGER},
+      FMID = #{fmid,jdbcType=INTEGER},
+      YDYBBH = #{ydybbh,jdbcType=VARCHAR},
+      YBJSHOST = #{ybjshost,jdbcType=VARCHAR},
+      SMKSID = #{smksid,jdbcType=VARCHAR},
+      SMKDID = #{smkdid,jdbcType=VARCHAR},
+      ISMXBYD = #{ismxbyd,jdbcType=INTEGER},
+      ISJY = #{isjy,jdbcType=INTEGER},
+      ISMCYF = #{ismcyf,jdbcType=INTEGER},
+      LATITUDE = #{latitude,jdbcType=INTEGER},
+      LONGITUDE = #{longitude,jdbcType=INTEGER},
+      AREAID = #{areaid,jdbcType=INTEGER},
+      YDIMG = #{ydimg,jdbcType=VARCHAR},
+      PZSM = #{pzsm,jdbcType=VARCHAR},
+      PZSMIMAG = #{pzsmimag,jdbcType=VARCHAR},
+      YID = #{yid,jdbcType=VARCHAR},
+      YDZSIMG = #{ydzsimg,jdbcType=VARCHAR},
+      ZZXYIMG = #{zzxyimg,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=INTEGER},
+      STARTTIME = #{starttime,jdbcType=TIMESTAMP},
+      ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      YDDESC = #{yddesc,jdbcType=LONGVARCHAR},
+      YDSM = #{ydsm,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ctdcn.fsss.admin.entity.TStoreInfo" >
+    update t_store_info
+    set YDNAME = #{ydname,jdbcType=CHAR},
+      YDADDR = #{ydaddr,jdbcType=CHAR},
+      YDTEL = #{ydtel,jdbcType=CHAR},
+      YDLXR = #{ydlxr,jdbcType=CHAR},
+      FID = #{fid,jdbcType=INTEGER},
+      FMID = #{fmid,jdbcType=INTEGER},
+      YDYBBH = #{ydybbh,jdbcType=VARCHAR},
+      YBJSHOST = #{ybjshost,jdbcType=VARCHAR},
+      SMKSID = #{smksid,jdbcType=VARCHAR},
+      SMKDID = #{smkdid,jdbcType=VARCHAR},
+      ISMXBYD = #{ismxbyd,jdbcType=INTEGER},
+      ISJY = #{isjy,jdbcType=INTEGER},
+      ISMCYF = #{ismcyf,jdbcType=INTEGER},
+      LATITUDE = #{latitude,jdbcType=INTEGER},
+      LONGITUDE = #{longitude,jdbcType=INTEGER},
+      AREAID = #{areaid,jdbcType=INTEGER},
+      YDIMG = #{ydimg,jdbcType=VARCHAR},
+      PZSM = #{pzsm,jdbcType=VARCHAR},
+      PZSMIMAG = #{pzsmimag,jdbcType=VARCHAR},
+      YID = #{yid,jdbcType=VARCHAR},
+      YDZSIMG = #{ydzsimg,jdbcType=VARCHAR},
+      ZZXYIMG = #{zzxyimg,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=INTEGER},
+      STARTTIME = #{starttime,jdbcType=TIMESTAMP},
+      ENDTIME = #{endtime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

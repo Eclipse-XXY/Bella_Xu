@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctdcn.fsss.admin.dao.FsssMsgCenterMapper">
+  <resultMap id="BaseResultMap" type="com.ctdcn.fsss.admin.entity.FsssMsgCenter">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="msgid" jdbcType="VARCHAR" property="msgid" />
+    <result column="msgstate" jdbcType="INTEGER" property="msgstate" />
+    <result column="msgstyle" jdbcType="INTEGER" property="msgstyle" />
+    <result column="bigtitle" jdbcType="VARCHAR" property="bigtitle" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="platform" jdbcType="INTEGER" property="platform" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="sound" jdbcType="INTEGER" property="sound" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="sendtime" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="retentiontime" jdbcType="DECIMAL" property="retentiontime" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="person" jdbcType="VARCHAR" property="person" />
+    <result column="faceid" jdbcType="VARCHAR" property="faceid" />
+    <result column="depart" jdbcType="VARCHAR" property="depart" />
+    <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="doctor" jdbcType="VARCHAR" property="doctor" />
+    <result column="facetime" jdbcType="TIMESTAMP" property="facetime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ctdcn.fsss.admin.entity.FsssMsgCenter">
+    <result column="descr" jdbcType="LONGVARCHAR" property="descr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, msgid, msgstate, msgstyle, bigtitle, title, platform, userid, sound, createtime, 
+    sendtime, retentiontime, path, person, faceid, depart, orderid, doctor, facetime
+  </sql>
+  <sql id="Blob_Column_List">
+    descr
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ctdcn.fsss.admin.entity.FsssMsgCenterExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fsss_msg_center
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ctdcn.fsss.admin.entity.FsssMsgCenterExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fsss_msg_center
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fsss_msg_center
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fsss_msg_center
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ctdcn.fsss.admin.entity.FsssMsgCenterExample">
+    delete from fsss_msg_center
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ctdcn.fsss.admin.entity.FsssMsgCenter">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into fsss_msg_center (msgid, msgstate, msgstyle, 
+      bigtitle, title, platform, 
+      userid, sound, createtime, 
+      sendtime, retentiontime, path, 
+      person, faceid, depart, 
+      orderid, doctor, facetime, 
+      descr)
+    values (#{msgid,jdbcType=VARCHAR}, #{msgstate,jdbcType=INTEGER}, #{msgstyle,jdbcType=INTEGER}, 
+      #{bigtitle,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{platform,jdbcType=INTEGER}, 
+      #{userid,jdbcType=VARCHAR}, #{sound,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{sendtime,jdbcType=TIMESTAMP}, #{retentiontime,jdbcType=DECIMAL}, #{path,jdbcType=VARCHAR}, 
+      #{person,jdbcType=VARCHAR}, #{faceid,jdbcType=VARCHAR}, #{depart,jdbcType=VARCHAR}, 
+      #{orderid,jdbcType=VARCHAR}, #{doctor,jdbcType=VARCHAR}, #{facetime,jdbcType=TIMESTAMP}, 
+      #{descr,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ctdcn.fsss.admin.entity.FsssMsgCenter">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into fsss_msg_center
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="msgid != null">
+        msgid,
+      </if>
+      <if test="msgstate != null">
+        msgstate,
+      </if>
+      <if test="msgstyle != null">
+        msgstyle,
+      </if>
+      <if test="bigtitle != null">
+        bigtitle,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="platform != null">
+        platform,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="sound != null">
+        sound,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="sendtime != null">
+        sendtime,
+      </if>
+      <if test="retentiontime != null">
+        retentiontime,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="person != null">
+        person,
+      </if>
+      <if test="faceid != null">
+        faceid,
+      </if>
+      <if test="depart != null">
+        depart,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="doctor != null">
+        doctor,
+      </if>
+      <if test="facetime != null">
+        facetime,
+      </if>
+      <if test="descr != null">
+        descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="msgid != null">
+        #{msgid,jdbcType=VARCHAR},
+      </if>
+      <if test="msgstate != null">
+        #{msgstate,jdbcType=INTEGER},
+      </if>
+      <if test="msgstyle != null">
+        #{msgstyle,jdbcType=INTEGER},
+      </if>
+      <if test="bigtitle != null">
+        #{bigtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="sound != null">
+        #{sound,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="retentiontime != null">
+        #{retentiontime,jdbcType=DECIMAL},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null">
+        #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="faceid != null">
+        #{faceid,jdbcType=VARCHAR},
+      </if>
+      <if test="depart != null">
+        #{depart,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="doctor != null">
+        #{doctor,jdbcType=VARCHAR},
+      </if>
+      <if test="facetime != null">
+        #{facetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="descr != null">
+        #{descr,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ctdcn.fsss.admin.entity.FsssMsgCenterExample" resultType="java.lang.Long">
+    select count(*) from fsss_msg_center
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update fsss_msg_center
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgid != null">
+        msgid = #{record.msgid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgstate != null">
+        msgstate = #{record.msgstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgstyle != null">
+        msgstyle = #{record.msgstyle,jdbcType=INTEGER},
+      </if>
+      <if test="record.bigtitle != null">
+        bigtitle = #{record.bigtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platform != null">
+        platform = #{record.platform,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sound != null">
+        sound = #{record.sound,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sendtime != null">
+        sendtime = #{record.sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.retentiontime != null">
+        retentiontime = #{record.retentiontime,jdbcType=DECIMAL},
+      </if>
+      <if test="record.path != null">
+        path = #{record.path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.person != null">
+        person = #{record.person,jdbcType=VARCHAR},
+      </if>
+      <if test="record.faceid != null">
+        faceid = #{record.faceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depart != null">
+        depart = #{record.depart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderid != null">
+        orderid = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctor != null">
+        doctor = #{record.doctor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.facetime != null">
+        facetime = #{record.facetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.descr != null">
+        descr = #{record.descr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update fsss_msg_center
+    set id = #{record.id,jdbcType=INTEGER},
+      msgid = #{record.msgid,jdbcType=VARCHAR},
+      msgstate = #{record.msgstate,jdbcType=INTEGER},
+      msgstyle = #{record.msgstyle,jdbcType=INTEGER},
+      bigtitle = #{record.bigtitle,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      platform = #{record.platform,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      sound = #{record.sound,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      sendtime = #{record.sendtime,jdbcType=TIMESTAMP},
+      retentiontime = #{record.retentiontime,jdbcType=DECIMAL},
+      path = #{record.path,jdbcType=VARCHAR},
+      person = #{record.person,jdbcType=VARCHAR},
+      faceid = #{record.faceid,jdbcType=VARCHAR},
+      depart = #{record.depart,jdbcType=VARCHAR},
+      orderid = #{record.orderid,jdbcType=VARCHAR},
+      doctor = #{record.doctor,jdbcType=VARCHAR},
+      facetime = #{record.facetime,jdbcType=TIMESTAMP},
+      descr = #{record.descr,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update fsss_msg_center
+    set id = #{record.id,jdbcType=INTEGER},
+      msgid = #{record.msgid,jdbcType=VARCHAR},
+      msgstate = #{record.msgstate,jdbcType=INTEGER},
+      msgstyle = #{record.msgstyle,jdbcType=INTEGER},
+      bigtitle = #{record.bigtitle,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      platform = #{record.platform,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      sound = #{record.sound,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      sendtime = #{record.sendtime,jdbcType=TIMESTAMP},
+      retentiontime = #{record.retentiontime,jdbcType=DECIMAL},
+      path = #{record.path,jdbcType=VARCHAR},
+      person = #{record.person,jdbcType=VARCHAR},
+      faceid = #{record.faceid,jdbcType=VARCHAR},
+      depart = #{record.depart,jdbcType=VARCHAR},
+      orderid = #{record.orderid,jdbcType=VARCHAR},
+      doctor = #{record.doctor,jdbcType=VARCHAR},
+      facetime = #{record.facetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ctdcn.fsss.admin.entity.FsssMsgCenter">
+    update fsss_msg_center
+    <set>
+      <if test="msgid != null">
+        msgid = #{msgid,jdbcType=VARCHAR},
+      </if>
+      <if test="msgstate != null">
+        msgstate = #{msgstate,jdbcType=INTEGER},
+      </if>
+      <if test="msgstyle != null">
+        msgstyle = #{msgstyle,jdbcType=INTEGER},
+      </if>
+      <if test="bigtitle != null">
+        bigtitle = #{bigtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        platform = #{platform,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="sound != null">
+        sound = #{sound,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendtime != null">
+        sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="retentiontime != null">
+        retentiontime = #{retentiontime,jdbcType=DECIMAL},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null">
+        person = #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="faceid != null">
+        faceid = #{faceid,jdbcType=VARCHAR},
+      </if>
+      <if test="depart != null">
+        depart = #{depart,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="doctor != null">
+        doctor = #{doctor,jdbcType=VARCHAR},
+      </if>
+      <if test="facetime != null">
+        facetime = #{facetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="descr != null">
+        descr = #{descr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ctdcn.fsss.admin.entity.FsssMsgCenter">
+    update fsss_msg_center
+    set msgid = #{msgid,jdbcType=VARCHAR},
+      msgstate = #{msgstate,jdbcType=INTEGER},
+      msgstyle = #{msgstyle,jdbcType=INTEGER},
+      bigtitle = #{bigtitle,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=VARCHAR},
+      sound = #{sound,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      retentiontime = #{retentiontime,jdbcType=DECIMAL},
+      path = #{path,jdbcType=VARCHAR},
+      person = #{person,jdbcType=VARCHAR},
+      faceid = #{faceid,jdbcType=VARCHAR},
+      depart = #{depart,jdbcType=VARCHAR},
+      orderid = #{orderid,jdbcType=VARCHAR},
+      doctor = #{doctor,jdbcType=VARCHAR},
+      facetime = #{facetime,jdbcType=TIMESTAMP},
+      descr = #{descr,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ctdcn.fsss.admin.entity.FsssMsgCenter">
+    update fsss_msg_center
+    set msgid = #{msgid,jdbcType=VARCHAR},
+      msgstate = #{msgstate,jdbcType=INTEGER},
+      msgstyle = #{msgstyle,jdbcType=INTEGER},
+      bigtitle = #{bigtitle,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=VARCHAR},
+      sound = #{sound,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      retentiontime = #{retentiontime,jdbcType=DECIMAL},
+      path = #{path,jdbcType=VARCHAR},
+      person = #{person,jdbcType=VARCHAR},
+      faceid = #{faceid,jdbcType=VARCHAR},
+      depart = #{depart,jdbcType=VARCHAR},
+      orderid = #{orderid,jdbcType=VARCHAR},
+      doctor = #{doctor,jdbcType=VARCHAR},
+      facetime = #{facetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ctdcn.fsss.admin.dao.TaUserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ctdcn.fsss.admin.entity.TaUserInfo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="USERNAME" property="username" jdbcType="CHAR" />
+    <result column="USERPWD" property="userpwd" jdbcType="CHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="CHAR" />
+    <result column="ROLEID" property="roleid" jdbcType="INTEGER" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="REALNAME" property="realname" jdbcType="CHAR" />
+    <result column="YDID" property="ydid" jdbcType="CHAR" />
+    <result column="FID" property="fid" jdbcType="INTEGER" />
+    <result column="ACCESS" property="access" jdbcType="VARCHAR" />
+    <result column="SESSIONID" property="sessionid" jdbcType="CHAR" />
+    <result column="EXPIRETIME" property="expiretime" jdbcType="TIMESTAMP" />
+    <result column="BDCHANNELID" property="bdchannelid" jdbcType="VARCHAR" />
+    <result column="BDUSERID" property="bduserid" jdbcType="VARCHAR" />
+    <result column="DEVICEID" property="deviceid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, USERNAME, USERPWD, MOBILE, ROLEID, CREATETIME, REALNAME, YDID, FID, ACCESS, SESSIONID, 
+    EXPIRETIME, BDCHANNELID, BDUSERID, DEVICEID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ctdcn.fsss.admin.entity.TaUserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ta_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ta_user_info
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ta_user_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ctdcn.fsss.admin.entity.TaUserInfo" >
+    insert into ta_user_info (ID, USERNAME, USERPWD, 
+      MOBILE, ROLEID, CREATETIME, 
+      REALNAME, YDID, FID, ACCESS, 
+      SESSIONID, EXPIRETIME, BDCHANNELID, 
+      BDUSERID, DEVICEID)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=CHAR}, #{userpwd,jdbcType=CHAR}, 
+      #{mobile,jdbcType=CHAR}, #{roleid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{realname,jdbcType=CHAR}, #{ydid,jdbcType=CHAR}, #{fid,jdbcType=INTEGER}, #{access,jdbcType=VARCHAR}, 
+      #{sessionid,jdbcType=CHAR}, #{expiretime,jdbcType=TIMESTAMP}, #{bdchannelid,jdbcType=VARCHAR}, 
+      #{bduserid,jdbcType=VARCHAR}, #{deviceid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ctdcn.fsss.admin.entity.TaUserInfo" >
+    insert into ta_user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="userpwd != null" >
+        USERPWD,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="roleid != null" >
+        ROLEID,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="realname != null" >
+        REALNAME,
+      </if>
+      <if test="ydid != null" >
+        YDID,
+      </if>
+      <if test="fid != null" >
+        FID,
+      </if>
+      <if test="access != null" >
+        ACCESS,
+      </if>
+      <if test="sessionid != null" >
+        SESSIONID,
+      </if>
+      <if test="expiretime != null" >
+        EXPIRETIME,
+      </if>
+      <if test="bdchannelid != null" >
+        BDCHANNELID,
+      </if>
+      <if test="bduserid != null" >
+        BDUSERID,
+      </if>
+      <if test="deviceid != null" >
+        DEVICEID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=CHAR},
+      </if>
+      <if test="userpwd != null" >
+        #{userpwd,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=CHAR},
+      </if>
+      <if test="ydid != null" >
+        #{ydid,jdbcType=CHAR},
+      </if>
+      <if test="fid != null" >
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="access != null" >
+        #{access,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionid != null" >
+        #{sessionid,jdbcType=CHAR},
+      </if>
+      <if test="expiretime != null" >
+        #{expiretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bdchannelid != null" >
+        #{bdchannelid,jdbcType=VARCHAR},
+      </if>
+      <if test="bduserid != null" >
+        #{bduserid,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null" >
+        #{deviceid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ctdcn.fsss.admin.entity.TaUserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from ta_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ctdcn.fsss.admin.entity.TaUserInfo" >
+    update ta_user_info
+    <set >
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=CHAR},
+      </if>
+      <if test="userpwd != null" >
+        USERPWD = #{userpwd,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="roleid != null" >
+        ROLEID = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realname != null" >
+        REALNAME = #{realname,jdbcType=CHAR},
+      </if>
+      <if test="ydid != null" >
+        YDID = #{ydid,jdbcType=CHAR},
+      </if>
+      <if test="fid != null" >
+        FID = #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="access != null" >
+        ACCESS = #{access,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionid != null" >
+        SESSIONID = #{sessionid,jdbcType=CHAR},
+      </if>
+      <if test="expiretime != null" >
+        EXPIRETIME = #{expiretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bdchannelid != null" >
+        BDCHANNELID = #{bdchannelid,jdbcType=VARCHAR},
+      </if>
+      <if test="bduserid != null" >
+        BDUSERID = #{bduserid,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null" >
+        DEVICEID = #{deviceid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ctdcn.fsss.admin.entity.TaUserInfo" >
+    update ta_user_info
+    set USERNAME = #{username,jdbcType=CHAR},
+      USERPWD = #{userpwd,jdbcType=CHAR},
+      MOBILE = #{mobile,jdbcType=CHAR},
+      ROLEID = #{roleid,jdbcType=INTEGER},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      REALNAME = #{realname,jdbcType=CHAR},
+      YDID = #{ydid,jdbcType=CHAR},
+      FID = #{fid,jdbcType=INTEGER},
+      ACCESS = #{access,jdbcType=VARCHAR},
+      SESSIONID = #{sessionid,jdbcType=CHAR},
+      EXPIRETIME = #{expiretime,jdbcType=TIMESTAMP},
+      BDCHANNELID = #{bdchannelid,jdbcType=VARCHAR},
+      BDUSERID = #{bduserid,jdbcType=VARCHAR},
+      DEVICEID = #{deviceid,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry
+		location="D:/Program Files/apache-maven-3.0.4/repository/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar" />
+	<context id="context1">
+
+		<!-- 去掉生成的代码中的注释 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+		<!-- connectionURL="jdbc:mysql://182.92.64.67:23306/fsss" userId="fsuser"
+			password="fsdbu0519@hw" 
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://182.92.64.98:3306/fsisb" userId="hwroot"
+			password="b4137@hw$123" />-->
+			<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/fsisb" userId="root"
+			password="root" />
+		<javaModelGenerator targetPackage="com.ctdcn.fsss.admin.entity"
+			targetProject="fsssadmin">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="com.ctdcn.fsss.admin.dao"
+			targetProject="fsssadmin">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<javaClientGenerator targetPackage="com.ctdcn.fsss.admin.dao"
+			targetProject="fsssadmin" type="XMLMAPPER">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		
+		<table schema="" tableName="fsss_msg_aliasfile" enableCountByExample="true"
+			enableUpdateByExample="true" enableDeleteByExample="true"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true" />
+		</table>
+		<!--
+		<table schema="" tableName="fsss_home_menu"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+		</table>
+		
+		<table schema="" tableName="t_adver_info" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="t_adver_type" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="t_area_info" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="t_drug_info" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="t_image_info" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="t_login_log" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="t_mfrs_info" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="t_order_detail"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="t_order_info" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table> 
+		<table schema="" tableName="t_store_info" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="t_user_info" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="t_valicode" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="ts_role" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="ts_store_drug" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="ts_user_info" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		<table schema="" tableName="ta_user_info" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		
+		<table schema="" tableName="" enableCountByExample="true"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table>
+		
+		<table schema="" tableName=""
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+		</table>
+		-->
+	</context>
+</generatorConfiguration>

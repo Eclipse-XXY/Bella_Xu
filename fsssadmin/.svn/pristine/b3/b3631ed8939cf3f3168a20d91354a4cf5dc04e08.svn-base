@@ -1,0 +1,575 @@
+package com.ctdcn.fsss.utils;
+
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public final class DateUtils {
+
+	private static Logger log = LoggerFactory.getLogger(DateUtils.class);
+	private static final String DATE_PATTERN = "yyyy-MM-dd";
+	private static final String TIME_PATTERN = "HH:mm:ss";
+
+	private DateUtils() {
+	}
+
+	/**
+	 * 获取日期格式yyyy-MM-dd
+	 * 
+	 * @return String yyyy-MM-dd
+	 * @return
+	 */
+	public static String getDatePattern() {
+		// Locale locale = LocaleContextHolder.getLocale();
+		String defaultDatePattern;
+		// try {
+		// defaultDatePattern = ResourceBundle.getBundle("ApplicationResources",
+		// locale).getString("date.format");
+		// } catch (MissingResourceException mse) {
+		defaultDatePattern = DATE_PATTERN;
+		// }
+
+		return defaultDatePattern;
+	}
+
+	/**
+	 * 获取日期时间格式yyyy-MM-dd HH:mm:ss
+	 * 
+	 * @return String
+	 * @return
+	 */
+	public static String getDateTimePattern() {
+		return DateUtils.getDatePattern() + " " + TIME_PATTERN;
+	}
+
+	/**
+	 * 返回特定格式的日期字符串
+	 * 
+	 * @return String
+	 * @param aMask
+	 *            格式
+	 * @param aDate
+	 *            日期
+	 * @return
+	 */
+	public static String getDate(String aMask, Date aDate) {
+		SimpleDateFormat df;
+		String returnValue = "";
+
+		if (aDate != null) {
+			df = new SimpleDateFormat(aMask);
+			returnValue = df.format(aDate);
+		}
+
+		return (returnValue);
+	}
+
+	public static String getDate(Date aDate) {
+		return getDate(getDatePattern(), aDate);
+	}
+
+	/**
+	 * 获取当前日期,格式为yyyy-MM-dd
+	 * 
+	 * @return String
+	 * @return
+	 */
+	public static String getNowDate() {
+		return getDate(getDatePattern(), new Date());
+	}
+
+	/**
+	 * 将字符串转换为日期
+	 * 
+	 * @return Date
+	 * @param aMask
+	 *            格式
+	 * @param strDate
+	 *            日期字符串
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date convertStringToDate(String aMask, String strDate) {
+		SimpleDateFormat df;
+		Date date = null;
+		df = new SimpleDateFormat(aMask);
+
+		if (log.isDebugEnabled()) {
+			log.debug("converting '" + strDate + "' to date with mask '"
+					+ aMask + "'");
+		}
+
+		try {
+			date = df.parse(strDate);
+		} catch (ParseException pe) {
+			log.info("日期转换错误: ", pe.getCause());
+			// throw new ParseException(pe.getMessage(), pe.getErrorOffset());
+		}
+
+		return date;
+	}
+
+	/**
+	 * 根据传入字符串格式，自动匹配对应日期格式
+	 * 
+	 * @return Date
+	 * @param strDate
+	 * @return
+	 */
+	public static Date convertStringToDate(String strDate) {
+		Date ndate = null;
+		if (strDate != null) {
+			if (strDate.length() > 10) {
+				ndate = convertStringToDate(getDateTimePattern(), strDate);
+			} else {
+				ndate = convertStringToDate(getDatePattern(), strDate);
+			}
+		}
+		// try {
+		// ndate = convertStringToDate(getDateTimePattern(), strDate);
+		// } catch (Exception e) {
+		// try {
+		// ndate = convertStringToDate(getDatePattern(), strDate);
+		// } catch (Exception ne) {
+		// log.error("日期转换错误!", ne.getCause());
+		// }
+		// }
+		return ndate;
+	}
+
+	/**
+	 * This method returns the current date time in the format: MM/dd/yyyy HH:MM
+	 * a
+	 * 
+	 * @param theTime
+	 *            the current time
+	 * @return the current date/time
+	 */
+	public static String getTime(Date theTime) {
+		return getDateTime(TIME_PATTERN, theTime);
+	}
+
+	/**
+	 * 根据传入日期得到日期+时间yyyy-MM-dd HH:mm:ss
+	 * 
+	 * @param aDate
+	 * @return
+	 */
+	public static String getDateTime(Date aDate) {
+		return getDateTime(getDateTimePattern(), aDate);
+	}
+
+	/**
+	 * 得到当前日期+时间yyyy-MM-dd HH:mm:ss
+	 * 
+	 * @param aDate
+	 * @return
+	 */
+	public static String getNowDateTime() {
+		return getDateTime(getDateTimePattern(), new Date());
+	}
+
+	/**
+	 * 获取当前日期的Calendar
+	 * 
+	 * @return Calendar
+	 * @return
+	 * @throws Exception
+	 */
+	public static Calendar getTodayCalendar() throws Exception {
+		Date today = new Date();
+		SimpleDateFormat df = new SimpleDateFormat(getDatePattern());
+
+		// This seems like quite a hack (date -> string -> date),
+		// but it works ;-)
+		String todayAsString = df.format(today);
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(convertStringToDate(getDatePattern(), todayAsString));
+
+		return cal;
+	}
+
+	/**
+	 * 获取特定格式的日期字符串
+	 * 
+	 * @return String
+	 * @param aMask
+	 * @param aDate
+	 * @return
+	 */
+	public static String getDateTime(String aMask, Date aDate) {
+		SimpleDateFormat df = null;
+		String returnValue = "";
+
+		if (aDate == null) {
+			log.info("转换日期不能为空!");
+		} else {
+			df = new SimpleDateFormat(aMask);
+			returnValue = df.format(aDate);
+		}
+
+		return (returnValue);
+	}
+
+	/**
+	 * 根据Calendar返回特定格式的日期字符串
+	 * 
+	 * @return String
+	 * @param cale
+	 * @param mark
+	 * @return
+	 */
+	public static String getCalendarString(Calendar cale, String mark) {
+		if (cale != null) {
+			SimpleDateFormat formatte = new SimpleDateFormat(mark);
+			Date date = cale.getTime();
+			return formatte.format(date);
+		}
+		return "";
+	}
+
+	/**
+	 * 比较两个日期（光比较日期，不包括时间）
+	 * 
+	 * @return int 如果日期相等返回0，如果第一个日期大于第二个日期返回>0的数，如果第一个日期小于第二个日期返回<0的数
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
+	public static int compareDate(Date date1, Date date2) {
+		Date ndate1 = convertStringToDate(getDatePattern(), getDate(date1));
+		Date ndate2 = convertStringToDate(getDatePattern(), getDate(date2));
+		return ndate1.compareTo(ndate2);
+	}
+
+	/**
+	 * 比较两个字符串日期
+	 * 
+	 * @return int 如果日期相等返回0，如果第一个日期大于第二个日期返回>0的数，如果第一个日期小于第二个日期返回<0的数
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
+	public static Integer compareStrDate(String date1, String date2) {
+		try {
+			Date ndate1 = convertStringToDate(getDateTimePattern(), date1);
+			Date ndate2 = convertStringToDate(getDateTimePattern(), date2);
+			return ndate1.compareTo(ndate2);
+		} catch (Exception e) {
+			try {
+				Date ndate1 = convertStringToDate(getDatePattern(), date1);
+				Date ndate2 = convertStringToDate(getDatePattern(), date2);
+				return ndate1.compareTo(ndate2);
+			} catch (Exception ne) {
+				try {
+					Date ndate1 = convertStringToDate("yyyyMMdd", date1);
+					Date ndate2 = convertStringToDate("yyyyMMdd", date2);
+					return ndate1.compareTo(ndate2);
+				} catch (Exception nne) {
+					log.info("日期转换错误!", nne.getCause());
+				}
+
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 取得一年的第几周
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static int getWeekOfYear(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		int week_of_year = c.get(Calendar.WEEK_OF_YEAR);
+		return week_of_year - 1;
+	}
+
+	/**
+	 * 取得当前日期的年份字符串
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static String getYear(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		int year = c.get(Calendar.YEAR);
+		return String.valueOf(year);
+	}
+
+	/**
+	 * 取得当前日期的月份数，返回：01、02、……12
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static String getMonthOfYear(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		// int month = c.get(Calendar.MONTH) - 1;
+		int month = c.get(Calendar.MONTH) + 1;
+		DecimalFormat df = new DecimalFormat("00");
+		return df.format(month);
+	}
+
+	/**
+	 * 取得当前日期的季度数，返回1，2，3，4 1：第一季度 2：第二季度 3：第三季度 4：第四季度
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static String getQuarter(Date date) {
+		int season = 0;
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		int month = c.get(Calendar.MONTH);
+		switch (month) {
+		case Calendar.JANUARY:
+		case Calendar.FEBRUARY:
+		case Calendar.MARCH:
+			season = 1;
+			break;
+		case Calendar.APRIL:
+		case Calendar.MAY:
+		case Calendar.JUNE:
+			season = 2;
+			break;
+		case Calendar.JULY:
+		case Calendar.AUGUST:
+		case Calendar.SEPTEMBER:
+			season = 3;
+			break;
+		case Calendar.OCTOBER:
+		case Calendar.NOVEMBER:
+		case Calendar.DECEMBER:
+			season = 4;
+			break;
+		default:
+			break;
+		}
+		return String.valueOf(season);
+	}
+
+	/**
+	 * 计算两个日期字符串之间的天数 不够24小时的按1天算
+	 * 
+	 * @return int
+	 * @param begin_date
+	 * @param end_date
+	 * @return
+	 */
+	public static int getIntervalDays(String begin_date, String end_date) {
+		Date date1 = DateUtils.convertStringToDate(begin_date);
+		Date date2 = DateUtils.convertStringToDate(end_date);
+		return getIntervalDays(date1, date2);
+	}
+
+	/**
+	 * 计算两个日期之间的天数 不够24小时的按1天算
+	 * 
+	 * @return int
+	 * @param begin_date
+	 * @param end_date
+	 * @return
+	 */
+	public static int getIntervalDays(Date begin_date, Date end_date) {
+		long time1 = begin_date.getTime();
+		long time2 = end_date.getTime();
+		long interval = time1 - time2;
+		int days = 0;
+		if (interval % (24 * 3600 * 1000) > 0) {
+			days = Integer.parseInt(interval / (24 * 3600 * 1000) + 1 + "");
+		} else {
+			days = Integer.parseInt(interval / (24 * 3600 * 1000) + "");
+		}
+		return days;
+	}
+
+	/**
+	 * 计算两个日期字符串之间的小时数 不够24小时的按1天算
+	 * 
+	 * @return int
+	 * @param begin_date
+	 * @param end_date
+	 * @return
+	 */
+	public static int getIntervalHours(String begin_date, String end_date) {
+		Date date1 = DateUtils.convertStringToDate(begin_date);
+		Date date2 = DateUtils.convertStringToDate(end_date);
+		return getIntervalHours(date1, date2);
+	}
+
+	/**
+	 * 计算两个日期之间的小时数 不够24小时的按1天算
+	 * 
+	 * @return int
+	 * @param begin_date
+	 * @param end_date
+	 * @return
+	 */
+	public static int getIntervalHours(Date begin_date, Date end_date) {
+		long time1 = begin_date.getTime();
+		long time2 = end_date.getTime();
+		long interval = time1 - time2;
+		int days = 0;
+		if (interval % (3600 * 1000) > 0) {
+			days = Integer.parseInt(interval / (3600 * 1000) + 1 + "");
+		} else {
+			days = Integer.parseInt(interval / (3600 * 1000) + "");
+		}
+		return days;
+	}
+
+	public static Integer getAge_at_the_time(String data_of_birth,
+			String admission_date_time) {
+		// 出生日期、入院日期
+		Date birth_date = DateUtils.convertStringToDate(data_of_birth);
+		Date admin_time = DateUtils.convertStringToDate(admission_date_time);
+		// 获得long类型出生日期、入院日期并求差值
+		long birthDate = birth_date.getTime();
+		long adminTime = admin_time.getTime();
+		long interval = adminTime - birthDate;
+
+		// 根据年龄计算，是否小于24小时，小于24小时返回小时
+		if (interval / (1000 * 60 * 60) < 24) {
+			// 返回小时，不足1小时，按1小时计算
+			if (interval % (1000 * 60 * 60) > 0) {
+				return Integer.parseInt(interval / (3600 * 1000) + 1 + "");
+			} else {
+				return Integer.parseInt(interval / (3600 * 1000) + "");
+			}
+		} else if (interval / (1000 * 60 * 60 * 24) < 31) {
+			// 判断是否小于31日，小于31日，返回天
+			if (interval % (1000 * 60 * 60 * 24) > 0) {
+				return Integer.parseInt(interval / (1000 * 60 * 60 * 24) + 1
+						+ "");
+			} else {
+				return Integer.parseInt(interval / (1000 * 60 * 60 * 24) + "");
+			}
+		} else {
+			// 判断是否小于12个月，小于12个月，返回月
+			String birthDay = data_of_birth.substring(5, 10);
+			String adminiDay = admission_date_time.substring(5, 10);
+			String birthYear = data_of_birth.substring(0, 4);
+			String adminYear = admission_date_time.substring(0, 4);
+			int inc = 0;
+			// 获得两个年份的间隔年数
+			int age = Integer.parseInt(adminYear) - Integer.parseInt(birthYear);
+			// 根据月、日比较，是否过完生日.过完生日，则增量为1
+			if (birthDay.compareTo(adminiDay) > 0) {
+				inc = 1;
+			}
+			// 0岁，用月相减
+			if (age == 0) {
+				// 天的判断，如2012-01-02和2012-04-01
+				return Integer.parseInt(adminiDay.substring(0, 2))
+						- Integer.parseInt(birthDay.substring(0, 2));
+			}
+			// 不满12个月，用月相减+12
+			if (age == 1 && inc == 1) {
+				return Integer.parseInt(adminiDay.substring(0, 2))
+						- Integer.parseInt(birthDay.substring(0, 2)) + 12;
+			} // 年龄大于1返回实足年龄
+				// 返回实足年龄
+			return age - inc;
+
+		}
+	}
+
+	/**
+	 * 转换日期字符串为目的格式 比如：输入2013年12月1日10时，通过调用方法 DateUtils.formatDateStr(s,
+	 * "yyyy年MM月dd日hh时mm分ss秒", "yyyy-MM-dd hh:MM:ss") 返回结果：2013-12-1 10:0:0
+	 * 
+	 * @return String 转换后的日期字符串
+	 * @param dateStr
+	 *            传入的日期字符串
+	 * @param sourceMask
+	 *            原始日期格式
+	 * @param distMask
+	 *            目标日期格式
+	 * @return
+	 */
+	public static String formatDateStr(String dateStr, String sourceMask,
+			String distMask) {
+		String result = "";
+		try {
+			int year_index = sourceMask.indexOf("yyyy");
+			int month_index = sourceMask.indexOf("MM");
+			int day_index = sourceMask.indexOf("dd");
+			int hour_index = sourceMask.indexOf("hh");
+			int min_index = sourceMask.indexOf("mm");
+			int second_index = sourceMask.indexOf("ss");
+			int slen = sourceMask.length();
+
+			String year_str = year_index == -1 ? null : sourceMask.substring(
+					year_index + 4, month_index == -1 ? slen : month_index);
+			String month_str = month_index == -1 ? null : sourceMask.substring(
+					month_index + 2, day_index == -1 ? slen : day_index);
+			String day_str = day_index == -1 ? null : sourceMask.substring(
+					day_index + 2, hour_index == -1 ? slen : hour_index);
+			String hour_str = hour_index == -1 ? null : sourceMask.substring(
+					hour_index + 2, min_index == -1 ? slen : min_index);
+			String min_str = min_index == -1 ? null : sourceMask.substring(
+					min_index + 2, second_index == -1 ? slen : second_index);
+			String second_str = second_index == -1 ? null : sourceMask
+					.substring(second_index + 2, slen);
+
+			String year = year_str != null && dateStr.indexOf(year_str) > 0 ? dateStr
+					.substring(0, dateStr.indexOf(year_str)) : "0000";
+			String month = month_str != null && dateStr.indexOf(month_str) > 0 ? dateStr
+					.substring(dateStr.indexOf(year_str) + year_str.length(),
+							dateStr.indexOf(month_str)) : "0";
+			String day = day_str != null && dateStr.indexOf(day_str) > 0 ? dateStr
+					.substring(dateStr.indexOf(month_str) + month_str.length(),
+							dateStr.indexOf(day_str)) : "0";
+			String hour = hour_str != null && dateStr.indexOf(hour_str) > 0 ? dateStr
+					.substring(dateStr.indexOf(day_str) + day_str.length(),
+							dateStr.indexOf(hour_str)) : "0";
+			String min = min_str != null && dateStr.indexOf(min_str) > 0 ? dateStr
+					.substring(dateStr.indexOf(hour_str) + hour_str.length(),
+							dateStr.indexOf(min_str)) : "0";
+			String second = second_str != null
+					&& dateStr.indexOf(second_str) > 0 ? dateStr.substring(
+					dateStr.indexOf(min_str) + min_str.length(),
+					dateStr.indexOf(second_str)) : "0";
+
+			distMask = distMask.replace("yyyy", "%s");
+
+			distMask = distMask.replace("MM", "%s");
+			distMask = distMask.replace("dd", "%s");
+			distMask = distMask.replace("hh", "%s");
+			distMask = distMask.replace("mm", "%s");
+			distMask = distMask.replace("ss", "%s");
+			result = String.format(distMask, year, month, day, hour, min,
+					second);
+		} catch (Exception e) {
+			log.warn("字符串转换日期发生错误：" + e.getCause());
+		}
+		return result;
+	}
+
+	public static void main(String[] args) {
+		String s = "2013年12月1日10时";
+		// String s2 = "2012-10-01 14:30:25";
+		// DateUtils.convertStringToDate(s);
+		// int days = DateUtils.getIntervalDays(s, s2);
+		// int hours = DateUtils.getIntervalHours(s, s2);
+		// System.out.println(days);
+		// System.out.println(hours);
+		String d = DateUtils.formatDateStr(s, "yyyy年MM月dd日hh时mm分ss秒",
+				"yyyy-MM-dd hh:MM:ss");
+		Date da = DateUtils.convertStringToDate(d);
+		System.out.println(DateUtils.getDateTime(da));
+		System.out.println(d);
+	}
+
+}
