@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bellar.mapper.SearchMapper">
+<select id="get_sku_by_spu" parameterType="int" 
+resultType="com.bellar.bean.T_MALL_SKU">
+select * from t_mall_sku where shp_id=#{spu_id}
+</select>
+<select id="get_sku_detail_by_id" parameterType="int" 
+resultMap="select_sku_detail_by_id_map">
+select sku.id as sku_id,spu.id as spu_id,tm.id as 
+tm_id,img.id as img_id,attr.shxm_mch,concat(val.shxzh,val.shxzh_mch)
+as shxzh_mch,sku.*,spu.*,img.*
+from
+t_mall_sku sku,
+t_mall_product spu,
+t_mall_trade_mark tm,
+t_mall_sku_attr_value av,
+t_mall_attr attr,
+t_mall_value val,
+t_mall_product_image img
+where
+sku.shp_id=spu.id and
+tm.id=spu.pp_id and
+sku.id=av.sku_id and
+av.shxm_id=attr.id and
+av.shxzh_id=val.id and
+spu.id=img.shp_id and
+sku.id=#{sku_id}
+</select>
+<resultMap type="com.bellar.bean.DETAIL_T_MALL_SKU" 
+id="select_sku_detail_by_id_map" autoMapping="true">
+<result column="sku_id" property="id"/>
+<association property="spu" autoMapping="true" javaType="com.bellar.bean.T_MALL_PRODUCT">
+<result column="spu_id" property="id"/>
+</association> 
+<association property="tm" autoMapping="true" javaType="com.bellar.bean.T_MALL_TRADE_MARK">
+<result column="tm_id" property="id"/>
+</association> 
+<collection property="list_image" ofType="com.bellar.bean.T_MALL_PRODUCT_IMAGE" autoMapping="true">
+<result column="img_id" property="id"/>
+</collection>
+<collection property="list_av_name" ofType="com.bellar.bean.T_MALL_SKU_AV_NAME" autoMapping="true">
+</collection>
+</resultMap>
+
+<select id="select_sku_by_attr" parameterType="Map"
+		resultMap="select_sku_by_class_2_map">
+		select sku.id as sku_id,spu.id as spu_id,tm.id as tm_id
+		,sku.*,spu.*,tm.* from
+		T_mall_product spu,
+		T_mall_sku sku,
+		T_mall_sku_attr_value av,
+		T_mall_trade_mark tm,
+		T_mall_tm_class tmc
+
+		where spu.Id =sku.shp_id AND
+		sku.Id = av.sku_id AND
+		spu.flbh1 =
+		tmc.flbh1 AND
+		tmc.pp_id = tm.Id
+		and
+		spu.pp_id = tm.id
+		and spu.flbh2 =
+		#{class_2_id}
+		${sql}
+		${order}
+	</select>
+<select id="get_sku_by_class_2" resultMap="select_sku_by_class_2_map"
+parameterType="int">
+select sku.id as sku_id,spu.id as spu_id,tm.id as tm_id,
+sku.*,spu.*, tm.*
+from
+t_mall_product spu,
+t_mall_sku sku,
+t_mall_sku_attr_value av,
+t_mall_trade_mark tm,
+t_mall_tm_class tmc
+where 
+spu.id=sku.shp_id and
+sku.id=av.sku_id and
+spu.flbh1=tmc.flbh1 and
+tmc.pp_id = tm.Id and
+spu.pp_id = tm.id and
+spu.flbh2 =#{class_2_id}
+</select>
+<!-- result表示一个属性对应着一个字段  association 表示关联的实体类着一个属性对应一个对象 -->
+<!-- column表示查询到的映射表的列  property表示对应实体类的属性 -->
+<!-- collection表示查询到的表的的的某一列对应一个集合 -->
+<resultMap type="com.bellar.bean.OBJECT_T_MALL_SKU" id="select_sku_by_class_2_map"
+autoMapping="true">
+
+<result column="sku_id" property="id"/>
+<association property="spu" javaType="com.bellar.bean.T_MALL_PRODUCT"
+autoMapping="true">
+<result column="spu_id" property="id"/> 
+</association>
+<association property="tm" javaType="com.bellar.bean.T_MALL_TRADE_MARK"
+autoMapping="true">
+<result column="tm_id" property="id"/> 
+</association>
+</resultMap>
+</mapper>

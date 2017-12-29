@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/jdbc 
+       http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       ">
+
+	<context:property-placeholder location="classpath:dbConfig.properties,classpath:wsInf.properties" />
+	<context:component-scan base-package="com.bellar.service"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driverClassName}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+<!-- 从Spring的事务管理的数据库当中复制过来的代理 -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.bellar.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean" />
+	</bean>
+<!-- 	相当于直接通过Spring创建了webservice的服务端的接口对象便于调用另一个系统的方法 -->
+<bean  class="com.bellar.util.MyInfFactoryBean">
+<!-- 像这种URL不可以写死 必须写在配置文件当中然后进行读取-->
+<property name="url" value="${userInf}" />
+<property name="t" value="com.bellar.service.UserServiceInf"/>
+</bean>
+
+	<bean class="com.bellar.util.MyInfFactoryBean">
+		<property name="url" value="${addressInf}" />
+		<property name="t" value="com.bellar.service.AddressServiceInf" />
+	</bean>
+<!-- 	配置事务防止数据的不一致和超卖，回滚，脏读，幻读等 这个事务
+是Spring管理的  而mybatis的数据源是从这里面复制过去的 -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+<!-- 	通知 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+		<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+<!-- 切面 -->
+	<aop:config>
+<!-- 	切点 -->
+<!--execution(* *..表示匹配所有的com.XX项目名  切入点表达式本身的话就是一*空格开头的表示项目的意思-->
+		<aop:pointcut expression="execution(* com.bellar.service.*.*(..))"
+			id="pointcut" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
+	</aop:config>
+</beans>

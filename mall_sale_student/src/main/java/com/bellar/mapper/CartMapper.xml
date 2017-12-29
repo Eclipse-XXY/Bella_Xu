@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bellar.mapper.CartMapper">
+<insert id="add_cart" parameterType="com.bellar.bean.T_MALL_SHOPPINGCAR"
+useGeneratedKeys="true" keyColumn="id"
+		keyProperty="id">
+insert into t_mall_shoppingCar(
+		sku_mch,
+		sku_jg,
+		tjshl,
+		hj,
+		yh_id,
+		shp_id,
+		sku_id,
+		shp_tp,
+		kcdz
+		)
+		values(
+		#{sku_mch},
+		#{sku_jg},
+		#{tjshl},
+		#{hj},
+		#{yh_id},
+		#{shp_id},
+		#{sku_id},
+		#{shp_tp},
+		#{kcdz}
+		)
+</insert>
+<update id="update_cart" parameterType="com.bellar.bean.T_MALL_SHOPPINGCAR">
+	update t_mall_shoppingCar
+		<set>
+			<if test="tjshl!=0">
+				tjshl = #{tjshl},
+			</if>
+			<if test="hj!=0">
+				hj = #{hj},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<select id="get_list_cart_by_userid" parameterType="int" resultType="com.bellar.bean.T_MALL_SHOPPINGCAR">
+	select *from t_mall_shoppingCar where yh_id=#{id}
+	</select>
+	<select id="get_total_monery" parameterType="int" resultType="java.math.BigDecimal">
+	select hj from t_mall_shoppingCar where sku_id=#{sku_id}
+	</select>
+	
+</mapper>

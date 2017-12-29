@@ -10,7 +10,7 @@
 	name = Bella_Xu
 [gui]
 	wmstate = normal
-	geometry = 841x483+407+57 189 218
-[remote "origin"]
+	geometry = 841x483+307+272 189 218
+[remote "orgin"]
 	url = https://github.com/Eclipse-XXY/Bella_Xu.git
-	fetch = +refs/heads/*:refs/remotes/origin/*
+	fetch = +refs/heads/*:refs/remotes/orgin/*
