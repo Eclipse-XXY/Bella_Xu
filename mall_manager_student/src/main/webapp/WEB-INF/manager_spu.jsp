@@ -18,7 +18,11 @@ $(function(){
 		});
 		
 	});
+
 });
+$(function(){
+
+})
 	function get_class2_by_class1(class_1_id){
 		$.getJSON("js/json/class_2_"+class_1_id+".js",function(data){
 // 			jquery对象的属性都是加上括号的 应该把上次选择的产品的数据从选择框当中移出去 

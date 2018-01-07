@@ -31,10 +31,15 @@ public class AttrController {
 	public ModelAndView save_attr(int class_2_id, String class_2_name, MODEL_OBJECT_T_MALL_ATTR listObject,
 			ModelMap map) {
     	AttrServiceImpl.add_attr(listObject,class_2_id);
-			ModelAndView modelAndView = new ModelAndView("redirect:goto_add_attr.do");
-			modelAndView.addObject("class_2_id", class_2_id);
-			modelAndView.addObject("class_2_name", class_2_name);
-			modelAndView.addObject("success", "添加成功");
+//			ModelAndView modelAndView = new ModelAndView("redirect:goto_add_attr.do");
+//			modelAndView.addObject("class_2_id", class_2_id);
+//			modelAndView.addObject("class_2_name", class_2_name);
+//			modelAndView.addObject("success", "添加成功");
+			
+			ModelAndView modelAndView = new ModelAndView("redirect:/index.do");
+			modelAndView.addObject("success", "恭喜");
+			modelAndView.addObject("url", "goto_add_attr.do");
+			modelAndView.addObject("title", "分类属性信息");
 			return modelAndView;	
 	}
 

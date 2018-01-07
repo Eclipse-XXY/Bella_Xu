@@ -10,36 +10,11 @@
 <base href="<%=basePath %>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">
-// $(function(){
-// 	$.getJSON("js/json/class_1.js",function(data){
-// 		$(data).each(function(i,json){
-// 			$("#attr_class-1-select").append("<option value="+json.id+">"+json.flmch1+"</option>");
-			
-// 		});
-		
-// 	});
-// });
-// 	function get_class2_by_class1(class_1_id){
-// 		$.getJSON("js/json/class_2_"+class_1_id+".js",function(data){
-// 				$("#attr_class-2-select").empty();
-// 			$(data).each(function(i,json){
-// 				$("#attr_class-2-select").append("<option value="+json.id+">"+json.flmch2+"</option>");
-// 			});
-		
-// 		});
-// 	};
-// 	function get_attr_by_class2(class_2_id){
-// // 	该方法相当于发起一个post 的请求
-// var class_2_name=$("#attr_class-2-select option:selected").text()
-// 		$.post("get_attr_by_class2.do",{class_2_id:class_2_id,class_2_name:class_2_name},function(data){
-// 		$("#attr_list_inner").html(data);
-// 		});
-// 	};
 var class_1_id="";
 var class_2_id="";
 var class_2_name="";
 	$(function(){
-		$("#attr_class-1-select").combobox({
+		$("#attr_class_1_select").combobox({
 			url:"js/json/class_1.js",//这个URL相当于JSON数据data
 			valueField:'id',
 			 textField:'flmch1',
@@ -47,7 +22,7 @@ var class_2_name="";
 			value:'请选择',
 			onSelect:function get_class2_by_class1(){
 			class_1_id=$(this).combobox('getValue');
-			$("#attr_class-2-select").combobox({
+			$("#attr_class_2_select").combobox({
 				url:"js/json/class_2_"+class_1_id+".js",
 				valueField:'id',
 				textField:'flmch2',
@@ -93,7 +68,7 @@ $("#set_attr").click(function(){
 	$("#set_attr_list_inner").html(data);
 	
 	});
-	index_add_tabs('goto_add_attr.do?class_2_id='+class_1_id+'&class_2_name='+class_2_id,'添加分类属性');
+	index_add_tabs('goto_add_attr.do?class_2_id='+class_2_id+'&class_2_name='+class_2_name,'添加分类属性');
 	
 });
 </script>
@@ -102,13 +77,14 @@ $("#set_attr").click(function(){
 <body>
 属性管理界面<br>
 <br>
-<select class="easyui-combobox" name="flbh1" id="attr_class-1-select" ></select>
-<select  class="easyui-combobox"name="flbh2" id="attr_class-2-select" ></select>
+<select class="easyui-combobox" name="flbh1" id=attr_class_1_select ></select>
+<select  class="easyui-combobox"name="flbh2" id="attr_class_2_select" ></select>
 <a  style="text-decoration:none;" id="set_attr" href="javascript:;">添加分类属性</a>
-<div class="easyui-datagrid" id="attr_list_inner">
-<!-- <div  id="attr_list_inner"> -->
-</div>
-<div  id="set_attr_list_inner">
+<!-- <div class="easyui-datagrid" id="attr_list_inner"> -->
+<!-- 	<option>请选择</option> -->
+<!-- </div> -->
+	<div class="easyui-datagrid" id="attr_list_inner"></div>
+<div id="set_attr_list_inner">
 </div>
 </body>
 </html>
