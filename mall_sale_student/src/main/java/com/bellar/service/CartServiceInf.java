@@ -13,4 +13,6 @@ public interface CartServiceInf {
 
 	List<T_MALL_SHOPPINGCAR> get_list_cart_by_userid(int id);
  BigDecimal get_total_monery(int sku_id);
+
+T_MALL_SHOPPINGCAR get_cart_item_by_skuid(int sku_id);
 }

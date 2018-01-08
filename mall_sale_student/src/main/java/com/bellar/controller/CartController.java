@@ -7,12 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -28,24 +30,74 @@ public class CartController {
 	@Autowired
 	CartServiceInf cartServiceImpl;
 
-//	 @RequestMapping("/cart_success")
-//	 public String cart_success(ModelMap map,T_MALL_SHOPPINGCAR cart) {
-////	 map.put("car_item", cart);
-//		 T_MALL_SHOPPINGCAR cart_item =(T_MALL_SHOPPINGCAR)map.get("cart");
-//	Map<String, Object> map2 =new HashMap<>();
-//	map2.put("cart_item", cart_item);
-//	 return "sale_cart_success";
-//	 }
+	 @RequestMapping("/cart_success")
+	 public String cart_success(ModelMap map,T_MALL_SHOPPINGCAR cart) {
+//	 map.put("car_item", cart);
+		 T_MALL_SHOPPINGCAR cart_item =(T_MALL_SHOPPINGCAR)map.get("cart");
+	Map<String, Object> map2 =new HashMap<>();
+	map2.put("cart_item", cart_item);
+	 return "sale_cart_success";
+	 }
 	@RequestMapping("change_cart")
-	public String change_cart(ModelMap map, String shfxz, int tjshl, int sku_id) {
+	public String change_cart( HttpSession session,	@CookieValue(value = "list_cart_cookie", required = false) String list_cart_cookie_parm,
+			ModelMap map, String shfxz, int tjshl, int sku_id) {
+		T_MALL_USER_ACCOUNT user = (T_MALL_USER_ACCOUNT) session.getAttribute("user");
+		List<T_MALL_SHOPPINGCAR> list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+		if (user == null) {
+			list_cart = MyJsonUtil.json_to_list(list_cart_cookie_parm, T_MALL_SHOPPINGCAR.class);
+			for (T_MALL_SHOPPINGCAR  cart_item : list_cart) {
+				if(	cart_item.getSku_id()==sku_id) {
+					if (tjshl==-1) {
+						//说明是修改商品的选中状态
+						cart_item.setShfxz(shfxz);
+					}else {
+						//说明是修改商品的添加数量
+						cart_item.setTjshl(tjshl);
+						}
+					break;
+				}
+				}
+		} else {
+			//从session中修改数据修改完更新数据库
+			list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");
+			//T_MALL_SHOPPINGCAR cart_item=cartServiceImpl.get_cart_item_by_skuid(sku_id);
+			for (T_MALL_SHOPPINGCAR cart_item : list_cart) {
+				if(	cart_item.getSku_id()==sku_id) {
+					if (tjshl==-1) {
+				//说明是修改商品的选中状态
+				cart_item.setShfxz(shfxz);
+				cartServiceImpl.update_cart(cart_item);
+			}else {
+				//说明是修改商品的添加数量
+				cart_item.setTjshl(tjshl);
+				cartServiceImpl.update_cart(cart_item);
+				}
+			break;
+		}
+	}
+		}
 		// 总共的金额
-		BigDecimal sum = new BigDecimal("0");
-		BigDecimal single_sku_monery = cartServiceImpl.get_total_monery(sku_id);
-		sum.add(single_sku_monery);
+//		BigDecimal sum = new BigDecimal("0");
+//		BigDecimal single_sku_monery = cartServiceImpl.get_total_monery(sku_id);
+//		sum.add(single_sku_monery);
+//		map.put("sum", sum);
+		BigDecimal sum=new BigDecimal("0.00");
+		for (T_MALL_SHOPPINGCAR cart_item : list_cart) {
+			System.err.println("是否选中"+cart_item.getShfxz());
+			if (cart_item.getShfxz().equals("0")) {
+				continue;
+			}
+			System.err.println("cart_item"+cart_item.getSku_jg());
+			double single_monery=cart_item.getSku_jg();
+			double total_money=single_monery*(cart_item.getTjshl());
+			System.out.println(""+total_money);
+	BigDecimal	single_sku_monery=	new BigDecimal(total_money);
+			sum=sum.add(single_sku_monery);
+		}
 		map.put("sum", sum);
+		map.put("list_cart", list_cart);
 		return "sale_cart_list_inner";
 	}
-
 	@RequestMapping("get_miniCart")
 	public String get_miniCart(ModelMap map, HttpSession session,
 			@CookieValue(value = "list_cart_cookie", required = false) String list_cart_cookie_parm) {
@@ -56,12 +108,19 @@ public class CartController {
 		} else {
 			list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");
 		}
+		int num=0;
+		for (T_MALL_SHOPPINGCAR t_MALL_SHOPPINGCAR : list_cart) {
+			int count=t_MALL_SHOPPINGCAR.getTjshl();
+		num+=count;
+		}
 		double sum = 0;
 		for (T_MALL_SHOPPINGCAR cart_product : list_cart) {
 			double hj = cart_product.getHj();
 			sum += hj;
 		}
 		map.put("sum", sum);
+		ServletContext servletContext = session.getServletContext();
+		servletContext.setAttribute("num", num);
 		map.put("list_cart", list_cart);
 		return "sale_miniCart_cart_list_inner";
 	}
@@ -78,12 +137,17 @@ public class CartController {
 			// 用户不为空的话从session域当中获取
 			list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");
 		}
+		int num=0;
+		for (T_MALL_SHOPPINGCAR t_MALL_SHOPPINGCAR : list_cart) {
+			num+=t_MALL_SHOPPINGCAR.getTjshl();
+		}
 		double sum = 0;
 		for (T_MALL_SHOPPINGCAR cart_product : list_cart) {
 			double hj = cart_product.getHj();
 			sum += hj;
 		}
 		map.put("sum", sum);
+		map.put("num", num);
 		map.put("list_cart", list_cart);
 		return "sale_cart_list";
 	}
@@ -135,6 +199,7 @@ public class CartController {
 				// db和session中没有购物车的数据
 				list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
 				// 添加db //调用dao层更新和插入的方法
+				//这个地方先添加数据库在添加session是因为相使用购物车的id
 				cartServiceImpl.add_cart(cart);
 				list_cart.add(cart);
 				map.put("list_cart", list_cart);
@@ -161,8 +226,7 @@ public class CartController {
 			}
 
 		}
-		return "sale_cart_success";
-//	 return "redirect:/cart_success.do";
+		return "redirect:/cart_success.do";
 	}
 
 	private boolean if_new_cart(List<T_MALL_SHOPPINGCAR> list_cart_cookie, T_MALL_SHOPPINGCAR cart) {

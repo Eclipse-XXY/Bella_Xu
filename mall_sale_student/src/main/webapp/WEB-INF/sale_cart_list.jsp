@@ -16,16 +16,16 @@
 
 <script type="text/javascript">
 	$(function(){
-	function sale_change_cart(checked,tjshl,sku_id){
-		if(checked){
-			checked="1";
-		}else{
-			checked="0";
-		}
-		$.post("change_cart.do",{shfxz:checked,tjshl:tjshl,sku_id:sku_id},function(data){
-			$("#sale_cart_list_inner").html(data)
-		});
-	}
+// 	function sale_change_cart(checked,tjshl,sku_id){
+// 		if(checked){
+// 			checked="1";
+// 		}else{
+// 			checked="0";
+// 		}
+// 		$.post("change_cart.do",{shfxz:checked,tjshl:tjshl,sku_id:sku_id},function(data){
+// 			$("#sale_cart_list_inner").html(data)
+// 		});
+// 	}
 	})
 </script>
 <title>信商商城</title>

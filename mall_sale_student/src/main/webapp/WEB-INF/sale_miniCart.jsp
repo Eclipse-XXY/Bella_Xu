@@ -25,10 +25,10 @@
 </head>
 <body>
 	<div class="card"> 
-	<a target="_blank" href="goto_cart_list.do" onmouseover="miniCart_show()" onmouseout="miniCart_hide()">购物车<div class="num">2</div></a>
+	<a target="_blank"  href="goto_cart_list.do" onmouseover="miniCart_show()" onmouseout="miniCart_hide()">购物车<div class="num">${num}</div></a>
 	<!--购物车商品-->
 <!-- 	可以选择ajax请求返回的是一个内嵌页的形式然后套入到一个div标签当中比较省事 -->
-	<div id="miniCart_cart_list" class="cart_pro"> 
+	<div style="display:none;"  id="miniCart_cart_list" class="cart_pro"> 
 <%-- 	<jsp:include page="sale_cart_list_inner.jsp"></jsp:include> --%>
 	</div>
 	</div>

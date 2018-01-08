@@ -20,12 +20,13 @@
 // shxm_mch这个参数的传递是两个参数合并在一起传递过来的
 function search_attr_up(shxm_id,shxzh_id,shxm_mch){
 	$("#search_attr_"+shxm_id).hide();
-	$("#search_attr_show").append("<div id='search_attr_show_id"+shxm_id+"'><a href='javascript:search_attr_down("+shxm_id+");'>"+shxm_mch+"</a><input type='text' value='{\"shxm_id\":"+shxm_id+",\"shxzh_id\":"+shxzh_id+"}' name='search_attr_id_arry'><div>");
+	$("#search_attr_show").append("<span id='search_attr_span_id"+shxm_id+"' class='gt'>&gt</span><div class='filter_div' id='search_attr_show_id"+shxm_id+"'><a href='javascript:search_attr_down("+shxm_id+");'>"+shxm_mch+"</a><input type='hidden' value='{\"shxm_id\":"+shxm_id+",\"shxzh_id\":"+shxzh_id+"}' name='search_attr_id_arry'><div>");
 	search_get_sku_by_attr();
 }
 function search_attr_down(shxm_id){
 	$("#search_attr_"+shxm_id).show();
 	$("#search_attr_show_id"+shxm_id).remove();
+	$("#search_attr_span_id"+shxm_id).remove();
 	search_get_sku_by_attr();
 }
 function  search_get_sku_by_attr(){
@@ -72,7 +73,7 @@ function search_change_order(new_order){
 		<div class="logo"><img src="./images/logo.jpg" alt=""></div>
 		<div class="search_on">
 			<div class="se">
-			<div id="search_attr_show"></div>
+<!-- 			<div id="search_attr_show"></div> -->
 	<input type="text" class="lf" name="search" id="search_order_show" value=" order by jg"/>
 	<input type="submit" class="clik" onclick="search_change_order(' order by jg ')" value="搜索">
 			</div>
@@ -106,7 +107,7 @@ function search_change_order(new_order){
 		</div>
 	</div>
 	<!--筛选阶段-->
-	<div class="filter">
+	<div  class="filter">
 		<h2>手机、数码 </h2>
 		<br>
 		<span class="gt">&gt</span>
@@ -121,6 +122,7 @@ function search_change_order(new_order){
 		<div class="filter_div">
 			魔兽游戏机
 		</div>
+		<div id="search_attr_show" ></div>
 		<div class="filter_clear">
 			清空筛选
 		</div>

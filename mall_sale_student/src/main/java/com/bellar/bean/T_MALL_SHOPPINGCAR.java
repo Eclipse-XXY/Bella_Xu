@@ -1,5 +1,6 @@
 package com.bellar.bean;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class T_MALL_SHOPPINGCAR {

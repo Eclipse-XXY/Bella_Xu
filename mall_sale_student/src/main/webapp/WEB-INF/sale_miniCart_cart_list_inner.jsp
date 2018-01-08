@@ -30,7 +30,7 @@
 	    </div>
 	</c:forEach>
 	<div class="gobottom">
-			共<span>1</span>件商品&nbsp;&nbsp;&nbsp;&nbsp;
+			共<span>${num}</span>件商品&nbsp;&nbsp;&nbsp;&nbsp;
 			共计￥<span>${sum}</span>
 			<button class="goprice">去购物车</button>
 	</div>

@@ -14,7 +14,13 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/finishCart.css"/>
 <script type="text/javascript">
-$(function(){
+
+
+	$(function(){
+	$("#btncommit").click(function(){
+		$("#dosubmint").submit();
+	});
+	});
 	function sale_change_cart(checked,tjshl,sku_id){
 		if(checked){
 			checked="1";
@@ -25,10 +31,6 @@ $(function(){
 			$("#sale_cart_list_inner").html(data)
 		});
 	}
-	$("#btncommit").click(function(){
-		$("#dosubmint").submit();
-	});
-})
 </script>
 <title>信商商城</title>
 </head>
@@ -51,14 +53,16 @@ $(function(){
 	     <c:forEach items="${list_cart}" var="cart">
 	     <tr>
 	     <td><input onclick="sale_change_cart(this.checked,-1,${cart.sku_id})" type="checkbox"  ${cart.shfxz=="1"?"checked":""}/></td>
+	       <!-- 	       	     为了实现方法的重用性所以第2个参数是没有用的下传递的参数 -->
 	     <td><img src="upload/image/${cart.shp_tp }" width="70px" alt=""></td>
 	     <td>${cart.sku_mch}&nbsp;</td>
 	     <td> ${cart.kcdz}</td>
 	     <td>${cart.sku_jg}&nbsp;</td>
 	     <td>
-	   <a href="javascript:sale_change_cart(0,${cart.tjshl-1},${cart.sku_id});" >-</a>
+<!-- 	     为了实现方法的重用性所以第一个参数是没有用的下传递的参数 -->
+	   <a href="javascript:sale_change_cart(1,${cart.tjshl-1},${cart.sku_id});" >-</a>
 	   ${cart.tjshl}
-	   <a href="javascript:sale_change_cart(0,${cart.tjshl+1},${cart.sku_id});" >+</a>
+	   <a href="javascript:sale_change_cart(1,${cart.tjshl+1},${cart.sku_id});" >+</a>
 	   <br>
 	   </td>
 	    <td>删除</td>

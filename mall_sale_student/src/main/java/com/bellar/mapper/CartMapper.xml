@@ -45,5 +45,7 @@ insert into t_mall_shoppingCar(
 	<select id="get_total_monery" parameterType="int" resultType="java.math.BigDecimal">
 	select hj from t_mall_shoppingCar where sku_id=#{sku_id}
 	</select>
-	
+<select id="get_cart_item_by_skuid" parameterType="int" resultType="com.bellar.bean.T_MALL_SHOPPINGCAR" >
+	select *from t_mall_shoppingCar where id=#{sku_id}
+</select>
 </mapper>

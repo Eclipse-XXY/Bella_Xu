@@ -33,4 +33,8 @@ CartMapper cartMapper ;
 		return cartMapper.get_total_monery( sku_id);
 	}
 
+	@Override
+	public T_MALL_SHOPPINGCAR get_cart_item_by_skuid(int sku_id) {
+		return 	cartMapper.get_cart_item_by_skuid( sku_id);
+	}
 }

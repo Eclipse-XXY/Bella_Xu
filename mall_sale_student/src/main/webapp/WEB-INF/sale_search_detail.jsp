@@ -78,9 +78,12 @@
 				</div>
 				<div class="clear">
 					<div class="min_t">选择版本：</div>
-					<c:forEach items="${obj_sku.list_av_name }" var="av">
+					<c:forEach items="${obj_sku.list_av_name }" var="av">	
 					<div class="min_mx" onclick=func($(this),'0')>${av.shxm_mch }:${av.shxzh_mch}</div>
 					</c:forEach>
+<%-- <c:forEach items="${list_sku}" var="sku"> --%>
+<%-- 		<a href="get_sku_by_id.do?sku_id=${sku.id}&spu_id=${sku.shp_id}"><div class="min_mx">${sku.sku_mch}</div></a><br> --%>
+<%-- </c:forEach> --%>
 				</div>
 				<div class="clear">
 					<div class="min_t" onclick=func($(this),'1')>商品买点：</div>
